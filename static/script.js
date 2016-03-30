@@ -111,6 +111,7 @@ function makeSlider(){
 	var svg_slider = div_slider
 		// .classed("svg-container", true)
 		.append("svg")
+		.attr("id", "chart")
 		// .attr("preserveAspectRatio", "xMinYMin meet")
 		// .attr("preserveAspectRatio", "none")
 		// .attr("viewBox", "0 0 " + width + " " + height)
@@ -220,7 +221,7 @@ function makeSlider(){
 		.attr("height", height);
 
 
-	d3.select(window).on('resize', resize); 
+	d3.select(window).on('resize', resize);
 	resize();
 
 	function resize(){
@@ -436,6 +437,7 @@ function toggleMap(){
 	}
 	if (mapVisible == true){
 		$(".map_overlay").fadeIn();
+		$("div.slider").css({"height": "200px"});
 		// svg_overlay.attr("visibility", "visible");
 		mapVisible = false;
 		// re-center
@@ -456,6 +458,7 @@ function toggleMap(){
 
 	} else {
 		$(".map_overlay").fadeOut();
+		$("div.slider").css({"height": "180px"});
 		// svg_overlay.attr("visibility", "hidden");
 		mapVisible = true;
 		// enable zoom
@@ -474,9 +477,6 @@ function toggleMap(){
 
 	}
 }
-
-
-
 
 
 function projectPoint(lat, lng) {
@@ -558,7 +558,7 @@ function updateData(){
 		g.selectAll("rect").data(data.features);
 
 		updateMarkers(duration = 1000);
-		
+
 		repositionSVG();
 
 	});
@@ -617,7 +617,6 @@ function checkKeys(e) {
 
 
 //semantic UI autocomplete
-
 var substringMatcher = function(strs) {
   return function findMatches(q, cb) {
 	var matches, substringRegex;
