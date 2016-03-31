@@ -384,11 +384,82 @@ function updateMarkers(duration){
 	}
 }
 
-//adjusts markers by slider
-function updateMarkersBySlider(weeks){
-	// document.querySelector('#weekSelected').value = week
-	weekIndex = weeks
-	updateMarkers();
+function makeInvestmentSlider() {
+	var margin = {top: 2, right: 10, bottom: 2, left: 10},
+    width = $('.slider').width() - (margin.left + margin.right),
+    height = 20 - (margin.bottom + margin.top);
+
+	var x = d3.scale.linear()
+	    .domain([0, 19])
+	    .range([0, width])
+	    .clamp(true);
+
+	var brush = d3.svg.brush()
+	    .x(x)
+	    .extent([0, 0])
+	    .on("brush", brushed);
+
+	var svg_investment = d3.select(".slider").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+			.attr("class", "investment")
+		  .append("g")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	svg_investment.append("g")
+	    .attr("class", "investment x axis")
+	    .attr("transform", "translate(0," + height / 2 + ")")
+	    .call(d3.svg.axis()
+	      .scale(x)
+	      .orient("bottom")
+	      .tickFormat(function(d) { return d + "°"; })
+	      .tickSize(0)
+	      .tickPadding(12))
+	  .select(".domain")
+	  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+	    .attr("class", "halo");
+
+	var investmentSlider = svg_investment.append("g")
+	    .attr("class", "investment slider")
+	    .call(brush);
+
+	investmentSlider.selectAll(".extent,.resize")
+	    .remove();
+
+	investmentSlider.select(".background")
+	    .attr("height", height);
+
+	var handle = investmentSlider.append("circle")
+	    .attr("class", "handle")
+	    .attr("transform", "translate(0," + height / 2 + ")")
+	    .attr("r", 9);
+
+	investmentSlider
+	    .call(brush.event)
+	  .transition() // gratuitous intro!
+	    .duration(750)
+	    .call(brush.extent([70, 70]))
+	    .call(brush.event);
+
+	function brushed() {
+	  var value = brush.extent()[0];
+
+	  if (d3.event.sourceEvent) { // not a programmatic event
+	    value = x.invert(d3.mouse(this)[0]);
+	    brush.extent([value, value]);
+	  }
+
+	  handle.attr("cx", x(value));
+	  d3.select("body").style("background-color", d3.hsl(value, .8, .8));
+	}
+
+	}
+
+	//adjusts markers by slider
+	function updateMarkersBySlider(weeks){
+		// document.querySelector('#weekSelected').value = week
+		weekIndex = weeks
+		updateMarkers();
 };
 
 //adjusts visibility of semantic interface
@@ -455,6 +526,7 @@ function toggleMap(){
 		$(".leaflet-control-container").fadeOut();
 
 		updatePrediction();
+		makeInvestmentSlider();
 
 	} else {
 		$(".map_overlay").fadeOut();
