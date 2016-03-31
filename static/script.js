@@ -437,7 +437,6 @@ function toggleMap(){
 	}
 	if (mapVisible == true){
 		$(".map_overlay").fadeIn();
-		$("div.slider").css({"height": "200px"});
 		// svg_overlay.attr("visibility", "visible");
 		mapVisible = false;
 		// re-center
@@ -452,13 +451,13 @@ function toggleMap(){
 		if (map.tap) map.tap.disable();
 		document.getElementById('map').style.cursor='default';
 
+		$("div.slider").css({"height": "200px"});
 		$(".leaflet-control-container").fadeOut();
 
 		updatePrediction();
 
 	} else {
 		$(".map_overlay").fadeOut();
-		$("div.slider").css({"height": "180px"});
 		// svg_overlay.attr("visibility", "hidden");
 		mapVisible = true;
 		// enable zoom
@@ -471,6 +470,7 @@ function toggleMap(){
 		if (map.tap) map.tap.enable();
 		document.getElementById('map').style.cursor='grab';
 
+		$("div.slider").css({"height": "180px"});
 		$(".leaflet-control-container").fadeIn();
 
 		updateData();

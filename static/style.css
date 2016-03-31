@@ -77,6 +77,7 @@ div.slider {
 	-moz-transition:width 300ms ease-in-out, height 300ms ease-in-out;
 	-o-transition:width 300ms ease-in-out, height 300ms ease-in-out;
 	transition:width 300ms ease-in-out, height 300ms ease-in-out;
+	transition-delay: 200ms;
 }
 
 #chart{
