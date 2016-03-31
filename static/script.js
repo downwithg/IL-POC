@@ -292,6 +292,7 @@ if (semanticActive == false){
 
 	getData();
 	makeSlider();
+	makeInvestmentSlider();
 
 }
 
@@ -450,7 +451,7 @@ function makeInvestmentSlider() {
 	  }
 
 	  handle.attr("cx", x(value));
-	  d3.select("body").style("background-color", d3.hsl(value, .8, .8));
+//	  d3.select("body").style("background-color", d3.hsl(value, .8, .8));
 	}
 
 	}
@@ -526,7 +527,6 @@ function toggleMap(){
 		$(".leaflet-control-container").fadeOut();
 
 		updatePrediction();
-		makeInvestmentSlider();
 
 	} else {
 		$(".map_overlay").fadeOut();
