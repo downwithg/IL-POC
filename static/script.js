@@ -52,6 +52,9 @@ var mapVisible = true;
 
 var map = L.map('map').setView([39.8934, 116.384390666], 16);
 
+map.options.maxZoom = 18;
+map.options.minZoom = 15;
+
 L.tileLayer('https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={accessToken}', {
 	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 	mapid: 'mapbox.light',
@@ -282,7 +285,7 @@ function brushended() {
 	updateMarkersBySlider(extent2);
 }
 
-var semanticActive = false; //toggle to active semantic UI walkthrough
+var semanticActive = true; //toggle to active semantic UI walkthrough
 
 if (semanticActive == false){
 	$(".desktop").css('display', 'inline');
@@ -399,25 +402,25 @@ function toggleSemantic(){
 		// console.log(option1, option2, option3)
 
 		// toggle for real scenario
-		// if (option1 == "business popularity" && option2 == "Dashilar") {
-		// 	$(".desktop").css('display', 'inline');
-		// 	$(".semantic").fadeOut();
-		// 	semanticVisible = false;
+		if (option1 == "business popularity" && option2 == "Dashilar") {
+			$(".desktop").css('display', 'inline');
+			$(".semantic").fadeOut();
+			semanticVisible = false;
 
-		// 	if (option3 == "investment in BJDW") {
-		// 		toggleMap();
-		// 	}
-		// 	if ($("#option3").css("display") == "none"){
-		// 		updateData();
-		// 		makeSlider();
-		// 	}
-		// }
+			if (option3 == "investment in BJDW") {
+				toggleMap();
+			}
+			if ($("#option3").css("display") == "none"){
+				updateData();
+				makeSlider();
+			}
+		}
 
 		// toggle for development
-		$(".desktop").css('display', 'inline');
-		$(".semantic").fadeOut();
-		semanticVisible = false;
-		toggleMap();
+		// $(".desktop").css('display', 'inline');
+		// $(".semantic").fadeOut();
+		// semanticVisible = false;
+		// toggleMap();
 
 
 	} else {
